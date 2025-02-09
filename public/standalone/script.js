@@ -1,78 +1,70 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Elements
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const chatInput = document.getElementById('chatInput');
-    const sendButton = document.getElementById('sendButton');
+    // DOM Elements
+    const elements = {
+        sidebar: document.getElementById('sidebar'),
+        sidebarToggle: document.getElementById('sidebarToggle'),
+        chatInput: document.getElementById('chatInput'),
+        sendButton: document.getElementById('sendButton'),
+        messagesContainer: document.querySelector('.messages-container')
+    };
 
-    // Toggle sidebar
-    sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
+    // Event Handlers
+    function toggleSidebar() {
+        elements.sidebar.classList.toggle('collapsed');
         const mainContent = document.querySelector('main');
-        mainContent.style.marginLeft = sidebar.classList.contains('collapsed') ? '0' : '260px';
-    });
-
-    // Auto-resize textarea
-    chatInput.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-        const maxHeight = 200; // Maximum height before scrolling
-        if (this.scrollHeight > maxHeight) {
-            this.style.height = maxHeight + 'px';
-            this.style.overflowY = 'auto';
-        } else {
-            this.style.overflowY = 'hidden';
-        }
-    });
-
-    // Send message
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            // Add message to UI
-            const messagesContainer = document.querySelector('.messages-container');
-            const messageElement = createMessageElement(message);
-            if (messagesContainer) {
-                messagesContainer.appendChild(messageElement);
-            }
-            
-            // Clear input
-            chatInput.value = '';
-            chatInput.style.height = 'auto';
-        }
+        mainContent.style.marginLeft = elements.sidebar.classList.contains('collapsed') ? '0' : '260px';
     }
 
-    // Create message element
+    function handleInputResize() {
+        const maxHeight = 200;
+        elements.chatInput.style.height = 'auto';
+        elements.chatInput.style.height = Math.min(elements.chatInput.scrollHeight, maxHeight) + 'px';
+        elements.chatInput.style.overflowY = elements.chatInput.scrollHeight > maxHeight ? 'auto' : 'hidden';
+    }
+
     function createMessageElement(content) {
-        const div = document.createElement('div');
-        div.className = 'message py-6';
-        div.innerHTML = `
-            <div class="flex gap-4">
-                <div class="message-avatar"></div>
-                <div class="flex-1 space-y-2">
-                    <div class="message-content">${content}</div>
-                    <div class="message-actions"></div>
+        const messageHTML = `
+            <div class="message py-6">
+                <div class="flex gap-4">
+                    <div class="message-avatar"></div>
+                    <div class="flex-1 space-y-2">
+                        <div class="message-content">${content}</div>
+                        <div class="message-actions"></div>
+                    </div>
                 </div>
             </div>
         `;
-        return div;
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = messageHTML;
+        return wrapper.firstElementChild;
     }
 
-    // Send button click
-    sendButton.addEventListener('click', sendMessage);
+    function sendMessage() {
+        const message = elements.chatInput.value.trim();
+        if (message && elements.messagesContainer) {
+            elements.messagesContainer.appendChild(createMessageElement(message));
+            elements.chatInput.value = '';
+            elements.chatInput.style.height = 'auto';
+            updateSendButton();
+        }
+    }
 
-    // Enter key to send
-    chatInput.addEventListener('keydown', (e) => {
+    function updateSendButton() {
+        elements.sendButton.disabled = !elements.chatInput.value.trim();
+    }
+
+    // Event Listeners
+    elements.sidebarToggle.addEventListener('click', toggleSidebar);
+    elements.chatInput.addEventListener('input', () => {
+        handleInputResize();
+        updateSendButton();
+    });
+    elements.sendButton.addEventListener('click', sendMessage);
+    elements.chatInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             sendMessage();
         }
     });
-
-    // Update send button state
-    chatInput.addEventListener('input', () => {
-        sendButton.disabled = !chatInput.value.trim();
-    });
 });
-

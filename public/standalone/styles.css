@@ -1,5 +1,5 @@
 
-/* Base styles */
+/* CSS Variables */
 :root {
     --color-sidebar: #171717;
     --color-main: #212121;
@@ -8,6 +8,7 @@
     --color-border: #4E4F60;
 }
 
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -18,32 +19,17 @@ body {
     font-family: system-ui, -apple-system, sans-serif;
     background-color: var(--color-main);
     color: white;
+    line-height: 1.5;
 }
 
-/* Layout */
-.flex {
-    display: flex;
-}
-
-.h-screen {
-    height: 100vh;
-}
-
-.flex-1 {
-    flex: 1;
-}
-
-.fixed {
-    position: fixed;
-}
-
-.relative {
-    position: relative;
-}
-
-.z-30, .z-40 {
-    z-index: 30;
-}
+/* Layout Classes */
+.flex { display: flex; }
+.h-screen { height: 100vh; }
+.flex-1 { flex: 1; }
+.fixed { position: fixed; }
+.relative { position: relative; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
 
 /* Sidebar */
 #sidebar {
@@ -57,15 +43,9 @@ body {
 }
 
 /* Header */
-.bg-main {
+.header {
     background-color: var(--color-main);
-}
-
-.border-b {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.backdrop-blur {
     backdrop-filter: blur(8px);
 }
 
@@ -85,55 +65,52 @@ body {
 }
 
 /* Chat Input */
-textarea {
+.chat-input {
+    width: 100%;
     color: white;
     background-color: #2F2F2F;
     border: none;
     font-size: 1rem;
     line-height: 1.5;
+    padding: 1rem;
+    border-radius: 9999px;
+    resize: none;
 }
 
-textarea:focus {
+.chat-input:focus {
     outline: none;
 }
 
-button {
+/* Buttons */
+.send-button {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.375rem;
+    background-color: white;
+    border-radius: 9999px;
     cursor: pointer;
     border: none;
 }
 
-button:disabled {
+.send-button:hover {
+    background-color: #e5e5e5;
+}
+
+.send-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* Utilities */
-.mx-auto {
-    margin-left: auto;
-    margin-right: auto;
-}
+/* Utility Classes */
+.mx-auto { margin: 0 auto; }
+.max-w-3xl { max-width: 48rem; }
+.px-4 { padding: 0 1rem; }
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.rounded-full { border-radius: 9999px; }
 
-.max-w-3xl {
-    max-width: 48rem;
-}
-
-.px-4 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-.space-y-2 > * + * {
-    margin-top: 0.5rem;
-}
-
-.rounded-full {
-    border-radius: 9999px;
-}
-
-/* Animations */
+/* Transitions */
 .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
