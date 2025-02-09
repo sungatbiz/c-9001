@@ -1,0 +1,139 @@
+
+/* Base styles */
+:root {
+    --color-sidebar: #171717;
+    --color-main: #212121;
+    --color-secondary: #444654;
+    --color-hover: #2A2B32;
+    --color-border: #4E4F60;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--color-main);
+    color: white;
+}
+
+/* Layout */
+.flex {
+    display: flex;
+}
+
+.h-screen {
+    height: 100vh;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.relative {
+    position: relative;
+}
+
+.z-30, .z-40 {
+    z-index: 30;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 260px;
+    background-color: var(--color-sidebar);
+    transition: transform 0.3s ease;
+}
+
+#sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+/* Header */
+.bg-main {
+    background-color: var(--color-main);
+}
+
+.border-b {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.backdrop-blur {
+    backdrop-filter: blur(8px);
+}
+
+/* Messages */
+.message {
+    padding: 1.5rem 0;
+}
+
+.message-content {
+    line-height: 1.5;
+}
+
+.message-actions {
+    display: flex;
+    gap: 0.5rem;
+    color: #9ca3af;
+}
+
+/* Chat Input */
+textarea {
+    color: white;
+    background-color: #2F2F2F;
+    border: none;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Utilities */
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max-w-3xl {
+    max-width: 48rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.space-y-2 > * + * {
+    margin-top: 0.5rem;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+/* Animations */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
